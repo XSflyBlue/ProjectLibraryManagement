@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plm.dao.ProcessMapper">
+	<!-- 定义存储过程 -->
+	<select id="addproject" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addproject(
+		#{ppId,mode=IN,jdbcType=INTEGER},
+		#{pbName,mode=IN,jdbcType=VARCHAR},
+		#{pbLevel,mode=IN,jdbcType=INTEGER},
+		#{pbType,mode=IN,jdbcType=INTEGER},
+		#{subjectType,jdbcType=INTEGER},
+		#{psiBrief,mode=IN,jdbcType=VARCHAR},
+		#{psiReason,mode=IN,jdbcType=VARCHAR},
+		#{psiContent,mode=IN,jdbcType=VARCHAR},
+		#{psiFeature,mode=IN,jdbcType=VARCHAR},
+		#{psiPlan,mode=IN,jdbcType=VARCHAR},
+		#{psiResult,mode=IN,jdbcType=VARCHAR},
+		#{pbId,mode=OUT,jdbcType=INTEGER},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="addprojectuser" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addprojectuser(
+		#{pbId,mode=IN,jdbcType=INTEGER},
+		#{uCode,mode=IN,jdbcType=VARCHAR},
+		#{uType,mode=IN,jdbcType=INTEGER},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="addmidprocess" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addmidprocess(
+		#{pbId,mode=IN,jdbcType=INTEGER},
+		#{pmiContent,mode=IN,jdbcType=VARCHAR},
+		#{pmiIssue,mode=IN,jdbcType=VARCHAR},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="addendprocess" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addendprocess(
+		#{pbId,mode=IN,jdbcType=INTEGER},
+		#{pmiContent,mode=IN,jdbcType=VARCHAR},
+		#{peiLevel,mode=IN,jdbcType=INTEGER},
+		#{peiMission,mode=IN,jdbcType=VARCHAR},
+		#{peiOpoinion,mode=IN,jdbcType=VARCHAR},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="addotherprocess" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addotherprocess(
+		#{pbId,mode=IN,jdbcType=INTEGER},
+		#{poiType,mode=IN,jdbcType=INTEGER},
+		#{poiContent,mode=IN,jdbcType=VARCHAR},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="addopinion" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call addopinion(
+		#{ppiId,mode=IN,jdbcType=INTEGER},
+		#{oUType,mode=IN,jdbcType=INTEGER},
+		#{oContent,mode=IN,jdbcType=VARCHAR},
+		#{oStatus,mode=IN,jdbcType=INTEGER},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="editopinion" parameterType="map"
+		statementType="CALLABLE">
+		{
+		call editopinion(
+		#{oId,mode=IN,jdbcType=INTEGER},
+		#{ppiId,mode=IN,jdbcType=INTEGER},
+		#{oUType,mode=IN,jdbcType=INTEGER},
+		#{oContent,mode=IN,jdbcType=VARCHAR},
+		#{oStatus,mode=IN,jdbcType=INTEGER},
+		#{flag,mode=OUT,jdbcType=INTEGER}
+		)
+		}
+	</select>
+	<select id="findpblevel" resultType="com.plm.model.Pblevel">
+		select
+		a.col1 as
+		'countryNum', b.col2 as 'provinceNum',c.col3 as 'schoolNum'
+		from
+		(select count(*) as col1 from project_base WHERE
+		project_base.PB_LEVEL=0) as
+		a,
+		(select count(*) as col2 from
+		project_base WHERE project_base.PB_LEVEL=1) as
+		b,
+		(select count(*) as
+		col3 from project_base WHERE project_base.PB_LEVEL=2) as
+		c;
+	</select>
+	<select id="findpbtype" resultType="com.plm.model.Pbtype">
+		select
+		a.col1 as 'typeonenum', b.col2 as 'typetwonum'
+		from
+		(select count(*) as col1 from project_base WHERE project_base.PB_TYPE=0) as
+		a,
+		(select count(*) as col2 from project_base WHERE
+		project_base.PB_TYPE=1) as b;
+	</select>
+	<select id="findpbsubject" resultType="com.plm.model.Pbtype">
+		select
+		a.col1 as
+		'typeonenum', b.col2 as 'typetwonum'
+		from
+		(select count(*) as col1 from project_base WHERE project_base.SUBJECT_TYPE=0)
+		as a,
+		(select count(*) as col2 from project_base WHERE project_base.SUBJECT_TYPE=1)
+		as b;
+	</select>
+	<select id="findpbstatus" resultType="com.plm.model.Pbtype">
+		select
+		a.col1 as 'typeonenum', b.col2 as 'typetwonum',c.col3 'typethreenum',d.col4 'typefournum',e.col5 'typefivenum',f.col6
+		'typesixnum'
+		from
+		(select count(*) as col1 from project_base WHERE project_base.PB_STATUS=0) as
+		a,
+		(select count(*) as col2 from project_base WHERE project_base.PB_STATUS=1) as
+		b,
+		(select count(*) as col3 from project_base WHERE project_base.PB_STATUS=2) as
+		c,
+		(select count(*) as col4 from project_base WHERE project_base.PB_STATUS=3) as
+		d,
+		(select count(*) as col5 from project_base WHERE project_base.PB_STATUS=4) as
+		e,
+		(select count(*) as col6 from project_base WHERE project_base.PB_STATUS=5) as
+		f;
+	</select>
+	<select id="findpbplan" resultType="java.util.HashMap">
+		SELECT
+		project_plan.PP_NAME AS 'ppname',
+		count(*) AS 'pbnum'
+		FROM
+		project_base
+		INNER JOIN project_plan ON project_base.PP_ID = project_plan.PP_ID
+		GROUP BY
+		project_base.PP_ID;
+	</select>
+
+	<select id="findpbstudent" resultType="java.util.HashMap">
+		SELECT
+		user_info.COLLEGE as 'college',
+		COUNT(DISTINCT project_user.U_ID) as 'colnum'
+		FROM
+		project_user
+		INNER JOIN project_base ON project_user.PB_ID = project_base.PB_ID
+		INNER JOIN user_info ON project_user.U_ID = user_info.U_ID
+		WHERE
+		project_user.U_TYPE = 0 OR
+		project_user.U_TYPE = 1
+		GROUP BY
+		user_info.COLLEGE;
+	</select>
+
+	<select id="findpbcolstudent" parameterType="String" resultType="java.util.HashMap">
+		SELECT
+		user_info.MAJOR 'major',
+		COUNT(DISTINCT project_user.U_ID) AS 'manum'
+		FROM
+		project_user
+		INNER JOIN project_base ON project_user.PB_ID = project_base.PB_ID
+		INNER JOIN user_info ON project_user.U_ID = user_info.U_ID
+		WHERE
+		user_info.COLLEGE = #{college} AND
+		project_user.U_TYPE = 0 OR
+		project_user.U_TYPE = 1
+		GROUP BY
+		user_info.COLLEGE
+	</select>
+</mapper>
