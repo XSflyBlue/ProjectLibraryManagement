@@ -49,7 +49,7 @@
                             <div class="am-u-sm-12 am-u-md-6">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger" data-toggle="modal" data-target="#editcollege" onclick="putcollegeuid(0)">新增学院或系管理员</button>
+                                        <button type="button" class="am-btn am-btn-default am-btn-danger" data-toggle="modal" data-target="#editcollege" onclick="putcollegeuid(0)">新增学校教务部门管理员</button>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="am-u-sm-12">
                                 <div class="am-tabs tpl-index-tabs" data-am-tabs>
                                     <ul class="am-tabs-nav am-nav am-nav-tabs">
-                                        <li><a href="#tab1">学院或系管理员</a></li>
+                                        <li><a href="#tab1">学校教务部门管理员</a></li>
                                     </ul>
                                     <div class="am-tabs-bd">
                                       
