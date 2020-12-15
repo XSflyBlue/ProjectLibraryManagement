@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.xsflyblue</groupId>
 	<artifactId>ProjectLibraryManagement</artifactId>
@@ -15,7 +13,8 @@
 		<url>https://github.com/XSflyBlue/ProjectLibraryManagement</url>
 		<connection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</connection>
 		<developerConnection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</developerConnection>
-	</scm>
+	  <tag>ProjectLibraryManagement-1.0.0</tag>
+  </scm>
 	<developers>
 		<developer>
 			<name>xsflyblue</name>
@@ -37,7 +36,7 @@
 	</distributionManagement>
 
 	<packaging>war</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>ProjectLibraryManagement</name>
 	<description>ProjectLibraryManagement for download built with Maven</description>
 	<url>http://maven.apache.org</url>
