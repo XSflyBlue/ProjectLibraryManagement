@@ -37,8 +37,9 @@
 	</distributionManagement>
 
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>ProjectLibraryManagement Maven Webapp</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>ProjectLibraryManagement</name>
+	<description>ProjectLibraryManagement for download built with Maven</description>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
