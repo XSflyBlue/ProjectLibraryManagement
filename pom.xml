@@ -13,7 +13,7 @@
 		<url>https://github.com/XSflyBlue/ProjectLibraryManagement</url>
 		<connection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</connection>
 		<developerConnection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</developerConnection>
-	  <tag>ProjectLibraryManagement-1.0.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 	<developers>
 		<developer>
@@ -36,7 +36,7 @@
 	</distributionManagement>
 
 	<packaging>war</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>ProjectLibraryManagement</name>
 	<description>ProjectLibraryManagement for download built with Maven</description>
 	<url>http://maven.apache.org</url>
