@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.xsflyblue</groupId>
 	<artifactId>ProjectLibraryManagement</artifactId>
@@ -13,9 +11,10 @@
 	</licenses>
 	<scm>
 		<url>https://github.com/XSflyBlue/ProjectLibraryManagement</url>
-		<connection>https://github.com/XSflyBlue/ProjectLibraryManagement.git</connection>
-		<developerConnection>https://github.com/XSflyBlue/ProjectLibraryManagement</developerConnection>
-	</scm>
+		<connection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</connection>
+		<developerConnection>scm:git:https://github.com/XSflyBlue/ProjectLibraryManagement.git</developerConnection>
+	  <tag>HEAD</tag>
+  </scm>
 	<developers>
 		<developer>
 			<name>xsflyblue</name>
@@ -37,8 +36,9 @@
 	</distributionManagement>
 
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>ProjectLibraryManagement Maven Webapp</name>
+	<version>1.0.1-SNAPSHOT</version>
+	<name>ProjectLibraryManagement</name>
+	<description>ProjectLibraryManagement for download built with Maven</description>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -336,6 +336,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>3.0.0-M1</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
 			</plugin>
 			<!-- 发布Jar到Maven仓库 End -->
 			<plugin>
