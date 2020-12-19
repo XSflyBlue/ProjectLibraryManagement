@@ -204,6 +204,16 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+			<!--build时包含resources下面的配置文件-->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.yml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
         </resources>
 		<finalName>ProjectLibraryManagement</finalName>
 		<plugins>
