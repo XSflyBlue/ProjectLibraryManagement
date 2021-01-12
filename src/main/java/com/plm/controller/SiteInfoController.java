@@ -67,8 +67,7 @@ public class SiteInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectBase> p = new PageInfo<ProjectBase>(list);
-		return p;
+		return new PageInfo<ProjectBase>(list);
 	}
     
     /**
@@ -399,8 +398,7 @@ public class SiteInfoController {
 		return 0;
 	}
 	/*** 
-     * 导出立项信息 
-     * @return 
+     * 导出立项信息
      * @throws Exception 
      */
     @RequestMapping("/exportStart")

@@ -392,14 +392,11 @@ public class UserController {
      * @param request
      * @param model
      * @return
-     * @throws ServletException
-     * @throws IOException
-     */
+	 */
     @RequestMapping("/resetPWD")
     public String resetPWD(@RequestParam(required=true) String id,
     		@RequestParam(required=true) String password
-    		,HttpServletRequest request,Model model)
-            throws ServletException, IOException {
+    		,HttpServletRequest request,Model model) {
     	if("验证成功".equals(PasswordUtils.toFindPassword(request, userService))) {
     		model.addAttribute("info", "验证成功");
     		// 重置密码
@@ -504,7 +501,7 @@ public class UserController {
 		String jobTitle = request.getParameter("jobTitle");
 		String major = request.getParameter("major");
 		String college = request.getParameter("college");
-		UserInfo usernew = null;
+		UserInfo usernew;
 		if(StringUtils.isNotNullString(uName,email)) {
 			if(!email.equals(user.getEmail())) {
 				usernew = userService.selectUserByEmail(email);
@@ -600,7 +597,7 @@ public class UserController {
 		}
 		//验证用户名、邮箱、ucode唯一性
 		if(StringUtils.isNotNullString(uName,email,uCode)) {
-			UserInfo otheruser = null;
+			UserInfo otheruser;
 			//邮箱已存在
 			otheruser = userService.selectUserByEmail(email);
 			if(otheruser!=null) {

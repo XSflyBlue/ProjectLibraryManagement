@@ -72,8 +72,7 @@ public class ProjectProcessController {
 	public @ResponseBody PostView postinfo(HttpServletRequest request) {
 		String piId = request.getParameter("piId");
 		if(StringUtils.isNotNullString(piId)) {
-			PostView postinfo = postService.findbyPostid(Integer.parseInt(piId));
-			return postinfo;
+			return postService.findbyPostid(Integer.parseInt(piId));
 		}else {
 			return null;
 		}
@@ -200,9 +199,8 @@ public class ProjectProcessController {
 		if(list==null) {
 			return null;
 		}
-		
-		PageInfo<ProjectPlan> p = new PageInfo<ProjectPlan>(list);
-		return p;
+
+		return new PageInfo<>(list);
 	}
 	
 	/**
@@ -221,9 +219,6 @@ public class ProjectProcessController {
 			list = projectPlanService.findProjectPlanAll();
 		}else if(user!=null&&user.getRole()==5){//学生查看满足条件的项目安排
 			 list = projectPlanService.findProjectPlanByUser(user);
-		}
-		if(list==null) {
-			return null;
 		}
 		return list;
 	}
@@ -245,7 +240,7 @@ public class ProjectProcessController {
     	String acceptTime = request.getParameter("acceptTime");
     	String tuStuNum = request.getParameter("tuStuNum");
     	
-    	ProjectPlan plan = null;
+    	ProjectPlan plan;
     	
     	//判断参数
     	if(StringUtils.isNotNullString(ppName,ppYear,startTime,midTime,endTime,stuNum,acceptTime,tuStuNum)) {
@@ -289,7 +284,7 @@ public class ProjectProcessController {
     	String acceptTime = request.getParameter("acceptTime");
     	String tuStuNum = request.getParameter("tuStuNum");
     	
-    	ProjectPlan plan = null;
+    	ProjectPlan plan;
     	
     	//判断参数
     	if(StringUtils.isNotNullString(ppId,ppName,ppYear,startTime,midTime,endTime,stuNum,acceptTime,tuStuNum)) {
