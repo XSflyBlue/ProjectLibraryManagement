@@ -1,19 +1,17 @@
 package com.plm.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.plm.model.Pblevel;
 import com.plm.model.Pbtype;
 import com.plm.model.UserInfo;
 import com.plm.service.IProjectExtendService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 统计与分析相关控制器
@@ -47,11 +45,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pblevel")
 	public @ResponseBody Pblevel pblevel() {
-		Pblevel level = projectExtendService.findpblevel();
-		if(level==null) {
-			return null;
-		}
-	    return level;
+		return projectExtendService.findpblevel();
 	}
 	
 	/**
@@ -60,11 +54,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pbtype")
 	public @ResponseBody Pbtype pbtype() {
-		Pbtype type = projectExtendService.findpbtype();
-		if(type==null) {
-			return null;
-		}
-	    return type;
+		return projectExtendService.findpbtype();
 	}
 	
 	/**
@@ -73,11 +63,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pbsubject")
 	public @ResponseBody Pbtype pbsubject() {
-		Pbtype type = projectExtendService.findpbsubject();
-		if(type==null) {
-			return null;
-		}
-	    return type;
+		return projectExtendService.findpbsubject();
 	}
 	
 	/**
@@ -86,11 +72,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pbstatus")
 	public @ResponseBody Pbtype pbstatus() {
-		Pbtype type = projectExtendService.findpbstatus();
-		if(type==null) {
-			return null;
-		}
-	    return type;
+		return projectExtendService.findpbstatus();
 	}
 	
 	/**
@@ -99,11 +81,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pbplan")
 	public @ResponseBody List<Map<String, Object>> pbplan() {
-		List<Map<String, Object>> list = projectExtendService.findpbplan();
-		if(list==null) {
-			return null;
-		}
-	    return list;
+		return projectExtendService.findpbplan();
 	}
 	
 	/**
@@ -112,11 +90,7 @@ public class StatisticsController {
 	 */
 	@RequestMapping("/pbstudent")
 	public @ResponseBody List<Map<String, Object>> pbstudent(HttpServletRequest request) {
-		List<Map<String, Object>> list = projectExtendService.findpbstudent();
-		if(list==null) {
-			return null;
-		}
-	    return list;
+		return projectExtendService.findpbstudent();
 	}
 	
 	/**
@@ -129,10 +103,6 @@ public class StatisticsController {
 		if(college==null) {
 			return null;
 		}
-		List<Map<String, Object>> list = projectExtendService.findpbcolstudent(college);
-		if(list==null) {
-			return null;
-		}
-	    return list;
+		return projectExtendService.findpbcolstudent(college);
 	}
 }

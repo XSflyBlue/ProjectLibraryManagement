@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         request.setCharacterEncoding("UTF-8");
         String url = request.getServletPath();
         System.out.println("post URL：" + url);
-        if (!url.equals("")) {
+        if (!"".equals(url)) {
             //判断是否已登录
             UserInfo loginUser = (UserInfo) request.getSession().getAttribute("user");
             if (loginUser == null) {

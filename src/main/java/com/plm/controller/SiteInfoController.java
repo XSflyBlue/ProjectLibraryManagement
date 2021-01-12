@@ -1,31 +1,24 @@
 package com.plm.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.plm.model.HelpInfo;
-import com.plm.model.LinksInfo;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseView;
-import com.plm.model.SiteFileInfo;
-import com.plm.model.UserInfo;
+import com.plm.model.*;
 import com.plm.service.IProjectBaseService;
 import com.plm.service.ISiteInfoService;
 import com.plm.util.FileOperateUtils;
 import com.plm.util.StringUtils;
 import com.plm.util.WordUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 网站信息相关控制器
@@ -74,8 +67,7 @@ public class SiteInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectBase> p = new PageInfo<ProjectBase>(list);
-		return p;
+		return new PageInfo<ProjectBase>(list);
 	}
     
     /**
@@ -109,8 +101,7 @@ public class SiteInfoController {
 			) {
 		PageHelper.startPage(page, pageSize); 
 		List<SiteFileInfo> list = siteInfoServeice.selectFileAll();
-		PageInfo<SiteFileInfo> p= new PageInfo<SiteFileInfo>(list);
-		return p;
+		return new PageInfo<SiteFileInfo>(list);
 	}
 	
 	/**
@@ -126,7 +117,7 @@ public class SiteInfoController {
 		}
 		
 		String info = (String) request.getAttribute("info");
-		if(info!=null&&"文件上传成功！".equals(info)) {
+		if("文件上传成功！".equals(info)) {
 			SiteFileInfo sitefile = (SiteFileInfo) request.getAttribute("sitefile");
 			if(sitefile!=null) {
 				return siteInfoServeice.insertFile(sitefile);
@@ -145,8 +136,7 @@ public class SiteInfoController {
 	public @ResponseBody SiteFileInfo fileinfo(HttpServletRequest request) {
 		String fileid = request.getParameter("fileid");
 		if(StringUtils.isNotNullString(fileid)) {
-			SiteFileInfo info = siteInfoServeice.selectFileById(Integer.parseInt(fileid));
-			return info;
+			return siteInfoServeice.selectFileById(Integer.parseInt(fileid));
 		}else {
 			return null;
 		}
@@ -209,8 +199,7 @@ public class SiteInfoController {
 			) {
 		PageHelper.startPage(page, pageSize); 
 		List<HelpInfo> list = siteInfoServeice.selectHelpAll();
-		PageInfo<HelpInfo> p= new PageInfo<HelpInfo>(list);
-		return p;
+		return new PageInfo<HelpInfo>(list);
 	}
 	
     /**
@@ -222,8 +211,7 @@ public class SiteInfoController {
 	public @ResponseBody HelpInfo helpinfo(HttpServletRequest request) {
 		String helpid = request.getParameter("helpid");
 		if(StringUtils.isNotNullString(helpid)) {
-			HelpInfo info = siteInfoServeice.selectHelpById(Integer.parseInt(helpid));
-			return info;
+			return siteInfoServeice.selectHelpById(Integer.parseInt(helpid));
 		}else {
 			return null;
 		}
@@ -323,8 +311,7 @@ public class SiteInfoController {
 			) {
 		PageHelper.startPage(page, pageSize); 
 		List<LinksInfo> linkList = siteInfoServeice.selectLinkAll();
-		PageInfo<LinksInfo> p= new PageInfo<LinksInfo>(linkList);
-		return p;
+		return new PageInfo<>(linkList);
 	}
 	
     /**
@@ -336,8 +323,7 @@ public class SiteInfoController {
 	public @ResponseBody LinksInfo linkinfo(HttpServletRequest request) {
 		String linkid = request.getParameter("linkid");
 		if(StringUtils.isNotNullString(linkid)) {
-			LinksInfo linkinfo = siteInfoServeice.selectLinkById(Integer.parseInt(linkid));
-			return linkinfo;
+			return siteInfoServeice.selectLinkById(Integer.parseInt(linkid));
 		}else {
 			return null;
 		}
@@ -412,8 +398,7 @@ public class SiteInfoController {
 		return 0;
 	}
 	/*** 
-     * 导出立项信息 
-     * @return 
+     * 导出立项信息
      * @throws Exception 
      */
     @RequestMapping("/exportStart")
@@ -430,7 +415,7 @@ public class SiteInfoController {
 		List<ProjectBaseView> list = projectBaseService.selectByPbid(Integer.parseInt(pId));
     	
         //把要填写的数据放在一个map里  
-        Map<String, Object> map = new HashMap<String, Object>();  
+        Map<String, Object> map = new HashMap<>();
         map.put("filename", "0001");
         map.put("title", "立项信息");
         map.put("info", info);

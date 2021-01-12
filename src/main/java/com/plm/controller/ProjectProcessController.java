@@ -1,15 +1,5 @@
 package com.plm.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plm.model.PostInfo;
@@ -19,6 +9,14 @@ import com.plm.model.UserInfo;
 import com.plm.service.IPostService;
 import com.plm.service.IProjectPlanService;
 import com.plm.util.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 项目过程管理相关控制器
@@ -74,8 +72,7 @@ public class ProjectProcessController {
 	public @ResponseBody PostView postinfo(HttpServletRequest request) {
 		String piId = request.getParameter("piId");
 		if(StringUtils.isNotNullString(piId)) {
-			PostView postinfo = postService.findbyPostid(Integer.parseInt(piId));
-			return postinfo;
+			return postService.findbyPostid(Integer.parseInt(piId));
 		}else {
 			return null;
 		}
@@ -94,8 +91,7 @@ public class ProjectProcessController {
 			) {
 		PageHelper.startPage(page, pageSize); 
 		List<PostView> listPost = postService.findPost();
-		PageInfo<PostView> p = new PageInfo<PostView>(listPost);
-		return p;
+		return new PageInfo<PostView>(listPost);
 	}
 	
 	/**
@@ -203,9 +199,8 @@ public class ProjectProcessController {
 		if(list==null) {
 			return null;
 		}
-		
-		PageInfo<ProjectPlan> p = new PageInfo<ProjectPlan>(list);
-		return p;
+
+		return new PageInfo<>(list);
 	}
 	
 	/**
@@ -224,9 +219,6 @@ public class ProjectProcessController {
 			list = projectPlanService.findProjectPlanAll();
 		}else if(user!=null&&user.getRole()==5){//学生查看满足条件的项目安排
 			 list = projectPlanService.findProjectPlanByUser(user);
-		}
-		if(list==null) {
-			return null;
 		}
 		return list;
 	}
@@ -248,7 +240,7 @@ public class ProjectProcessController {
     	String acceptTime = request.getParameter("acceptTime");
     	String tuStuNum = request.getParameter("tuStuNum");
     	
-    	ProjectPlan plan = null;
+    	ProjectPlan plan;
     	
     	//判断参数
     	if(StringUtils.isNotNullString(ppName,ppYear,startTime,midTime,endTime,stuNum,acceptTime,tuStuNum)) {
@@ -292,7 +284,7 @@ public class ProjectProcessController {
     	String acceptTime = request.getParameter("acceptTime");
     	String tuStuNum = request.getParameter("tuStuNum");
     	
-    	ProjectPlan plan = null;
+    	ProjectPlan plan;
     	
     	//判断参数
     	if(StringUtils.isNotNullString(ppId,ppName,ppYear,startTime,midTime,endTime,stuNum,acceptTime,tuStuNum)) {

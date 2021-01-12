@@ -1,35 +1,14 @@
 package com.plm.service.impl;
 
+import com.plm.dao.*;
+import com.plm.model.*;
+import com.plm.service.IProjectExtendService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
-import com.plm.dao.ProcessMapper;
-import com.plm.dao.ProjectBaseMapper;
-import com.plm.dao.ProjectEndViewMapper;
-import com.plm.dao.ProjectMidViewMapper;
-import com.plm.dao.ProjectOtherViewMapper;
-import com.plm.dao.ProjectProcessInfoMapper;
-import com.plm.dao.ProjectStartViewMapper;
-import com.plm.model.OpinionInfo;
-import com.plm.model.Pblevel;
-import com.plm.model.Pbtype;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseExample;
-import com.plm.model.ProjectEndView;
-import com.plm.model.ProjectEndViewExample;
-import com.plm.model.ProjectMidView;
-import com.plm.model.ProjectMidViewExample;
-import com.plm.model.ProjectOtherView;
-import com.plm.model.ProjectOtherViewExample;
-import com.plm.model.ProjectProcessInfo;
-import com.plm.model.ProjectStartView;
-import com.plm.model.ProjectStartViewExample;
-import com.plm.service.IProjectExtendService;
 
 @Service("projectExtendService")
 public class ProjectExtendServiceImpl implements IProjectExtendService {
@@ -71,7 +50,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		psViewEx = new ProjectStartViewExample();
 		psViewEx.createCriteria().andUIdEqualTo(userid);
 		List<ProjectStartView> psviewList = psViewDao.selectByExample(psViewEx);
-		if (!psviewList.isEmpty() && psviewList.size() > 0) {
+		if (!psviewList.isEmpty()) {
 			return psviewList;
 		}
 		return null;
@@ -81,7 +60,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		pmViewEx = new ProjectMidViewExample();
 		pmViewEx.createCriteria().andUIdEqualTo(userid);
 		List<ProjectMidView> pmviewList = pmViewDao.selectByExample(pmViewEx);
-		if (!pmviewList.isEmpty() && pmviewList.size() > 0) {
+		if (!pmviewList.isEmpty()) {
 			return pmviewList;
 		}
 		return null;
@@ -91,7 +70,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		peViewEx = new ProjectEndViewExample();
 		peViewEx.createCriteria().andUIdEqualTo(userid);
 		List<ProjectEndView> peviewList = peViewDao.selectByExample(peViewEx);
-		if (!peviewList.isEmpty() && peviewList.size() > 0) {
+		if (!peviewList.isEmpty()) {
 			return peviewList;
 		}
 		return null;
@@ -101,7 +80,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		poViewEx = new ProjectOtherViewExample();
 		poViewEx.createCriteria().andUIdEqualTo(userid);
 		List<ProjectOtherView> poviewList = poViewDao.selectByExample(poViewEx);
-		if (!poviewList.isEmpty() && poviewList.size() > 0) {
+		if (!poviewList.isEmpty()) {
 			return poviewList;
 		}
 		return null;
@@ -133,8 +112,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         
         //返回项目id
         if(map.get("pbId")!=null) {
-        	int flag = (Integer) map.get("pbId");
-        	return flag;
+			return (int) (Integer) map.get("pbId");
         }
         return 0;
 	}
@@ -150,8 +128,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.addprojectuser(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -167,8 +144,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.addmidprocess(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -186,8 +162,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.addendprocess(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -203,8 +178,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.addotherprocess(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -221,8 +195,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.addopinion(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -240,8 +213,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
         processDao.editopinion(map);
         //返回项目id
         if(map.get("flag")!=null) {
-        	int flag = (Integer) map.get("flag");
-        	return flag;
+			return (int) (Integer) map.get("flag");
         }
         return 0;
 	}
@@ -250,7 +222,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		pmViewEx = new ProjectMidViewExample();
 		pmViewEx.createCriteria().andPpiIdEqualTo(ppiId);
 		List<ProjectMidView> pmviewList = pmViewDao.selectByExample(pmViewEx);
-		if (!pmviewList.isEmpty() && pmviewList.size() > 0) {
+		if (!pmviewList.isEmpty()) {
 			return pmviewList.get(0);
 		}
 		return null;
@@ -260,7 +232,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		peViewEx = new ProjectEndViewExample();
 		peViewEx.createCriteria().andPpiIdEqualTo(ppiId);
 		List<ProjectEndView> peviewList = peViewDao.selectByExample(peViewEx);
-		if (!peviewList.isEmpty() && peviewList.size() > 0) {
+		if (!peviewList.isEmpty()) {
 			return peviewList.get(0);
 		}
 		return null;
@@ -270,7 +242,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		poViewEx = new ProjectOtherViewExample();
 		poViewEx.createCriteria().andPpiIdEqualTo(ppiId);
 		List<ProjectOtherView> poviewList = poViewDao.selectByExample(poViewEx);
-		if (!poviewList.isEmpty() && poviewList.size() > 0) {
+		if (!poviewList.isEmpty()) {
 			return poviewList.get(0);
 		}
 		return null;
@@ -280,7 +252,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		psViewEx = new ProjectStartViewExample();
 		psViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectStartView> psviewList = psViewDao.selectHasGroup(psViewEx);
-		if (!psviewList.isEmpty() && psviewList.size() > 0) {
+		if (!psviewList.isEmpty()) {
 			return psviewList;
 		}
 		return null;
@@ -288,7 +260,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 
 	public List<ProjectStartView> findProjectStartView(String college) {
 		List<ProjectStartView> psviewList = psViewDao.selectByCollege(college);
-		if (!psviewList.isEmpty() && psviewList.size() > 0) {
+		if (!psviewList.isEmpty()) {
 			return psviewList;
 		}
 		return null;
@@ -298,7 +270,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		pmViewEx = new ProjectMidViewExample();
 		pmViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectMidView> pmviewList = pmViewDao.selectHasGroup(pmViewEx);
-		if (!pmviewList.isEmpty() && pmviewList.size() > 0) {
+		if (!pmviewList.isEmpty()) {
 			return pmviewList;
 		}
 		return null;
@@ -306,7 +278,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 
 	public List<ProjectMidView> findProjectMidView(String college) {
 		List<ProjectMidView> pmviewList = pmViewDao.selectByCollege(college);
-		if (!pmviewList.isEmpty() && pmviewList.size() > 0) {
+		if (!pmviewList.isEmpty()) {
 			return pmviewList;
 		}
 		return null;
@@ -316,7 +288,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		peViewEx = new ProjectEndViewExample();
 		peViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectEndView> peviewList = peViewDao.selectHasGroup(peViewEx);
-		if (!peviewList.isEmpty() && peviewList.size() > 0) {
+		if (!peviewList.isEmpty()) {
 			return peviewList;
 		}
 		return null;
@@ -326,7 +298,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		peViewEx = new ProjectEndViewExample();
 		peViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectEndView> peviewList = peViewDao.selectByCollege(college);
-		if (!peviewList.isEmpty() && peviewList.size() > 0) {
+		if (!peviewList.isEmpty()) {
 			return peviewList;
 		}
 		return null;
@@ -336,7 +308,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 		poViewEx = new ProjectOtherViewExample();
 		poViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectOtherView> poviewList = poViewDao.selectHasGroup(poViewEx);
-		if (!poviewList.isEmpty() && poviewList.size() > 0) {
+		if (!poviewList.isEmpty()) {
 			return poviewList;
 		}
 		return null;
@@ -344,7 +316,7 @@ public class ProjectExtendServiceImpl implements IProjectExtendService {
 
 	public List<ProjectOtherView> findProjectOtherView(String college) {
 		List<ProjectOtherView> poviewList = poViewDao.selectByCollege(college);
-		if (!poviewList.isEmpty() && poviewList.size() > 0) {
+		if (!poviewList.isEmpty()) {
 			return poviewList;
 		}
 		return null;

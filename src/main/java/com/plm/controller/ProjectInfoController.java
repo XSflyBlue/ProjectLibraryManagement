@@ -1,41 +1,21 @@
 package com.plm.controller;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.plm.model.*;
+import com.plm.service.*;
+import com.plm.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.plm.model.OpinionInfo;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseView;
-import com.plm.model.ProjectEndView;
-import com.plm.model.ProjectFundsView;
-import com.plm.model.ProjectMidView;
-import com.plm.model.ProjectOtherView;
-import com.plm.model.ProjectPlan;
-import com.plm.model.ProjectProcessInfo;
-import com.plm.model.ProjectStartView;
-import com.plm.model.ProjectUser;
-import com.plm.model.UserInfo;
-import com.plm.model.WeeklyInfo;
-import com.plm.model.WeeklyView;
-import com.plm.service.IOpinionService;
-import com.plm.service.IProjectBaseService;
-import com.plm.service.IProjectExtendService;
-import com.plm.service.IProjectPlanService;
-import com.plm.service.IUserService;
-import com.plm.service.IWeeklyService;
-import com.plm.util.StringUtils;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 /**
  * 项目信息管理相关控制器
  * @author Flyblue
@@ -84,7 +64,7 @@ public class ProjectInfoController {
 			record.setfOpinionTime(StringUtils.getDate());
 			record.setfStatus(Integer.parseInt(fstatus));
 			return projectBaseService.editProject(record);
-		}else if(projectId!=null&&fopinion==null&&fstatus==null&&pfundcontent==null) {
+		}else if(projectId != null && fopinion == null && fstatus == null) {
 			ProjectBase record = new ProjectBase();
 			record.setPbId(Integer.parseInt(projectId));
 			record.setfOpinion("");
@@ -169,7 +149,7 @@ public class ProjectInfoController {
 			return null;
 		}
 		PageHelper.startPage(page, pageSize); 
-		List<ProjectStartView> list = null;
+		List<ProjectStartView> list;
 		
 		if(user.getRole()==1) {//学校教务
 			list = projectExtendService.findProjectStartView();
@@ -182,8 +162,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectStartView> p = new PageInfo<ProjectStartView>(list);
-		return p;
+		return new PageInfo<ProjectStartView>(list);
 	}
 	
 	/**
@@ -370,8 +349,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectMidView> p = new PageInfo<ProjectMidView>(list);
-		return p;
+		return new PageInfo<>(list);
 	}
 	
 	/**
@@ -382,11 +360,7 @@ public class ProjectInfoController {
 	 */
 	@RequestMapping("/midinfo")
 	public @ResponseBody ProjectMidView midinfo(@RequestParam Integer ppiId,HttpServletRequest request) {
-		ProjectMidView info = projectExtendService.findProjectMidViewDetail(ppiId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectExtendService.findProjectMidViewDetail(ppiId);
 	}
 	
 	/**
@@ -491,11 +465,7 @@ public class ProjectInfoController {
 		if(user==null) {
 			return null;
 		}
-		List<OpinionInfo> info = opinionService.findOpinion(ppiId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return opinionService.findOpinion(ppiId);
 	}
 	
 	/**
@@ -514,12 +484,8 @@ public class ProjectInfoController {
 		if(!StringUtils.isNotNullString(ppiId,outype)) {
 			return null;
 		}
-		
-		OpinionInfo info = opinionService.findOpinion(Integer.parseInt(ppiId),Integer.parseInt(outype));
-		if(info==null) {
-			return null;
-		}
-		return info;
+
+		return opinionService.findOpinion(Integer.parseInt(ppiId),Integer.parseInt(outype));
 	}
 	
 	/**
@@ -586,52 +552,51 @@ public class ProjectInfoController {
 		if(pId==null||type==null||outype==null) {
 			return 0;
 		}
-		int flag = 0;
-		flag = opinionService.deleteOpinion(Integer.parseInt(oid));
+		int flag = opinionService.deleteOpinion(Integer.parseInt(oid));
 		if(flag==1) {//切换项目状态
 			ProjectBase info = projectBaseService.selectById(Integer.parseInt(pId));
 			ProjectBase newinfo = new ProjectBase();
 
 			if(info!=null) {
 				newinfo.setPbId(info.getPbId());//项目id
-				if(type.equals("1")) {//立项
-					if(outype.equals("0")) {//导师
+				if("1".equals(type)) {//立项
+					if("0".equals(outype)) {//导师
 						newinfo.setPsiOStatus(11);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPsiOStatus(17);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPsiOStatus(13);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPsiOStatus(15);
 					}
-				}else if(type.equals("2")) {//中期
-					if(outype.equals("0")) {//导师
+				}else if("2".equals(type)) {//中期
+					if("0".equals(outype)) {//导师
 						newinfo.setPmiOStatus(21);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPmiOStatus(27);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPmiOStatus(23);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPmiOStatus(25);
 					}
-				}else if(type.equals("3")) {//验收
-					if(outype.equals("0")) {//导师
+				}else if("3".equals(type)) {//验收
+					if("0".equals(outype)) {//导师
 						newinfo.setPeiOStatus(31);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPeiOStatus(37);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPeiOStatus(33);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPeiOStatus(35);
 					}
-				}else if(type.equals("4")) {//其他
-					if(outype.equals("0")) {//导师
+				}else if("4".equals(type)) {//其他
+					if("0".equals(outype)) {//导师
 						newinfo.setPoiOStatus(41);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPoiOStatus(47);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPoiOStatus(43);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPoiOStatus(45);
 					}
 				}
@@ -693,7 +658,7 @@ public class ProjectInfoController {
 			return null;
 		}
 		PageHelper.startPage(page, pageSize); 
-		List<ProjectEndView> list = null;
+		List<ProjectEndView> list;
 		
 		if(user.getRole()==1) {//学校教务
 			list = projectExtendService.findProjectEndView();
@@ -706,8 +671,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectEndView> p = new PageInfo<ProjectEndView>(list);
-		return p;
+		return new PageInfo<ProjectEndView>(list);
 	}
 	
 	/**
@@ -718,11 +682,7 @@ public class ProjectInfoController {
 	 */
 	@RequestMapping("/endinfo")
 	public @ResponseBody ProjectEndView endinfo(@RequestParam Integer ppiId,HttpServletRequest request) {
-		ProjectEndView info = projectExtendService.findProjectEndViewDetail(ppiId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectExtendService.findProjectEndViewDetail(ppiId);
 	}
 	
 	/**
@@ -871,7 +831,7 @@ public class ProjectInfoController {
 			return null;
 		}
 		PageHelper.startPage(page, pageSize); 
-		List<ProjectOtherView> list = null;
+		List<ProjectOtherView> list;
 		
 		if(user.getRole()==1) {//学校教务
 			list = projectExtendService.findProjectOtherView();
@@ -884,8 +844,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectOtherView> p = new PageInfo<ProjectOtherView>(list);
-		return p;
+		return new PageInfo<>(list);
 	}
 	
 	/**
@@ -896,11 +855,7 @@ public class ProjectInfoController {
 	 */
 	@RequestMapping("/otherinfo")
 	public @ResponseBody ProjectOtherView otherinfo(@RequestParam Integer ppiId,HttpServletRequest request) {
-		ProjectOtherView info = projectExtendService.findProjectOtherViewDetail(ppiId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectExtendService.findProjectOtherViewDetail(ppiId);
 	}
 	
 	/**
@@ -1041,8 +996,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectBaseView> p = new PageInfo<ProjectBaseView>(list);
-		return p;
+		return new PageInfo<ProjectBaseView>(list);
 	}
 	/**
 	 * 项目详情
@@ -1052,11 +1006,7 @@ public class ProjectInfoController {
 	 */
 	@RequestMapping("/projectinfo")
 	public @ResponseBody ProjectBase projectinfo(@RequestParam Integer pId,HttpServletRequest request) {
-		ProjectBase info = projectBaseService.selectById(pId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectBaseService.selectById(pId);
 	}
 	
 	/**
@@ -1106,7 +1056,7 @@ public class ProjectInfoController {
 			return null;
 		}
 		PageHelper.startPage(page, pageSize); 
-		List<ProjectFundsView> list = null;
+		List<ProjectFundsView> list;
 		if(user.getRole()==1) {//学校教务
 			list = projectBaseService.findfunds();
 		}else if(user.getRole()==2) {//学院
@@ -1118,8 +1068,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<ProjectFundsView> p = new PageInfo<ProjectFundsView>(list);
-		return p;
+		return new PageInfo<ProjectFundsView>(list);
 	}
 	
 	/**
@@ -1134,12 +1083,7 @@ public class ProjectInfoController {
 		if(user==null||!StringUtils.isNotNullString(projectId)) {
 			return null;
 		}
-		ProjectFundsView info = null;
-		info = projectBaseService.findfundsDetail(Integer.parseInt(projectId));
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectBaseService.findfundsDetail(Integer.parseInt(projectId));
 	}
 	
 	/**
@@ -1166,8 +1110,7 @@ public class ProjectInfoController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<WeeklyView> p = new PageInfo<WeeklyView>(list);
-		return p;
+		return new PageInfo<WeeklyView>(list);
 	}
 	
 	/**
@@ -1184,11 +1127,7 @@ public class ProjectInfoController {
 		if(user==null||!StringUtils.isNotNullString(projectId)) {
 			return null;
 		}
-		List<WeeklyView> list = weeklyService.findWeekly(user.getuId(), Integer.parseInt(projectId));
-		if(list==null) {
-			return null;
-		}
-		return list;
+		return weeklyService.findWeekly(user.getuId(), Integer.parseInt(projectId));
 	}
 	
 	/**
@@ -1205,11 +1144,7 @@ public class ProjectInfoController {
 		if(!StringUtils.isNotNullString(weekId)) {
 			return null;
 		}
-		WeeklyInfo info = weeklyService.findWeekly(Integer.parseInt(weekId));
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return weeklyService.findWeekly(Integer.parseInt(weekId));
 	}
 	
 	/**
@@ -1295,11 +1230,7 @@ public class ProjectInfoController {
 		if(planid==null) {
 			return null;
 		}
-		ProjectPlan info = projectPlanService.findProjectPlan(planid);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return projectPlanService.findProjectPlan(planid);
 	}
 	
 	/**
@@ -1312,11 +1243,7 @@ public class ProjectInfoController {
 		if(projectid==null) {
 			return null;
 		}
-		List<ProjectBaseView> list = projectBaseService.selectByPbid(projectid);
-		if(list==null) {
-			return null;
-		}
-		return list;
+		return projectBaseService.selectByPbid(projectid);
 	}
 	
 	/**
@@ -1330,11 +1257,7 @@ public class ProjectInfoController {
 		if(user==null) {
 			return null;
 		}
-		List<ProjectBaseView> list = projectBaseService.findProject(user);
-		if(list==null) {
-			return null;
-		}
-		return list;
+		return projectBaseService.findProject(user);
 	}
 	
 	/**
@@ -1387,7 +1310,7 @@ public class ProjectInfoController {
 		if(projectId!=null && pstatus!=null) {
 			ProjectBase record = new ProjectBase();
 			record.setPbId(projectId);
-			if(pstatus.intValue()==0 || pstatus.intValue()==5 ) {//结题优秀项目状态转化
+			if(pstatus ==0 || pstatus ==5 ) {//结题优秀项目状态转化
 				record.setPbStatus(pstatus);
 				return projectBaseService.editProject(record);
 			}else {
@@ -1433,7 +1356,7 @@ public class ProjectInfoController {
 		if(user.getRole()!=5) {//非学生
 			return -6;
 		}
-		if(user.getuId()==loginuser.getuId()) {//本人
+		if(user.getuId().equals(loginuser.getuId())) {//本人
 			return -7;
 		}
 		//项目安排制约

@@ -1,15 +1,13 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.OpinionInfoMapper;
 import com.plm.model.OpinionInfo;
 import com.plm.model.OpinionInfoExample;
 import com.plm.service.IOpinionService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 @Service("opinionService")
 public class OpinionServiceImpl implements IOpinionService {
 	@Resource
@@ -33,8 +31,7 @@ public class OpinionServiceImpl implements IOpinionService {
 	public List<OpinionInfo> findOpinion(int proceessId) {
 		opinionEX = new OpinionInfoExample();
 		opinionEX.createCriteria().andPpiIdEqualTo(proceessId);
-		List<OpinionInfo> info = opinionDao.selectByExample(opinionEX);
-		return info;
+		return opinionDao.selectByExample(opinionEX);
 	}
 
 	public OpinionInfo findOpinion(int proceessId, int outype) {

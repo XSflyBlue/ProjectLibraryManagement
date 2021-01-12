@@ -1,11 +1,5 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.PostInfoMapper;
 import com.plm.dao.PostViewMapper;
 import com.plm.model.PostInfo;
@@ -13,6 +7,10 @@ import com.plm.model.PostInfoExample;
 import com.plm.model.PostView;
 import com.plm.model.PostViewExample;
 import com.plm.service.IPostService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("postService")
 public class PostServiceImpl implements IPostService {
@@ -44,7 +42,7 @@ public class PostServiceImpl implements IPostService {
 		postViewEx = new PostViewExample();
 		postViewEx.createCriteria().andPiIdIsNotNull();
 		List<PostView> listPost = postViewDao.selectByExample(postViewEx);
-		if (!listPost.isEmpty() && listPost.size() > 0) {
+		if (!listPost.isEmpty()) {
 			return listPost;
 		}
 		return null;
@@ -64,7 +62,7 @@ public class PostServiceImpl implements IPostService {
 		postViewEx = new PostViewExample();
 		postViewEx.createCriteria().andPiIdEqualTo(postId);
 		List<PostView> listPost = postViewDao.selectByExample(postViewEx);
-		if (!listPost.isEmpty() && listPost.size() > 0) {
+		if (!listPost.isEmpty()) {
 			return listPost.get(0);
 		}
 		return null;
@@ -74,7 +72,7 @@ public class PostServiceImpl implements IPostService {
 		postEx = new PostInfoExample();
 		postEx.createCriteria().andPiTitleEqualTo(posttitle);
 		List<PostInfo> listPost = postDao.selectByExample(postEx);
-		if (!listPost.isEmpty() && listPost.size() > 0) {
+		if (!listPost.isEmpty()) {
 			return listPost.get(0);
 		}
 		return null;

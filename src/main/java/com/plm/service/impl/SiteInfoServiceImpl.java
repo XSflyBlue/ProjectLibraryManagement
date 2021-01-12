@@ -1,21 +1,14 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.HelpInfoMapper;
 import com.plm.dao.LinksInfoMapper;
 import com.plm.dao.SiteFileInfoMapper;
-import com.plm.model.HelpInfo;
-import com.plm.model.HelpInfoExample;
-import com.plm.model.LinksInfo;
-import com.plm.model.LinksInfoExample;
-import com.plm.model.SiteFileInfo;
-import com.plm.model.SiteFileInfoExample;
+import com.plm.model.*;
 import com.plm.service.ISiteInfoService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("siteInfoService")
 public class SiteInfoServiceImpl implements ISiteInfoService {
@@ -42,8 +35,7 @@ public class SiteInfoServiceImpl implements ISiteInfoService {
 	public List<SiteFileInfo> selectFileAll() {
 		siteFileEX = new SiteFileInfoExample();
 		siteFileEX.createCriteria().andSfIdIsNotNull();
-		List<SiteFileInfo> list = siteFileDao.selectByExample(siteFileEX);
-		return list;
+		return siteFileDao.selectByExample(siteFileEX);
 	}
 	public SiteFileInfo selectFileById(Integer sfId) {
 		return siteFileDao.selectByPrimaryKey(sfId);
@@ -71,7 +63,7 @@ public class SiteInfoServiceImpl implements ISiteInfoService {
 		linksEx = new LinksInfoExample();
 		linksEx.createCriteria().andLiIdIsNotNull();
 		List<LinksInfo> LinkdList = linksDao.selectByExample(linksEx);
-		if (!LinkdList.isEmpty() && LinkdList.size() > 0) {
+		if (!LinkdList.isEmpty()) {
 			return LinkdList;
 		}
 		return null;
@@ -102,8 +94,7 @@ public class SiteInfoServiceImpl implements ISiteInfoService {
 	public List<HelpInfo> selectHelpAll() {
 		helpEx = new HelpInfoExample();
 		helpEx.createCriteria().andHIdIsNotNull();
-		List<HelpInfo> list = helpDao.selectByExample(helpEx);
-		return list;
+		return helpDao.selectByExample(helpEx);
 	}
 	public HelpInfo selectHelpById(Integer hId) {
 		return helpDao.selectByPrimaryKey(hId);
@@ -119,7 +110,7 @@ public class SiteInfoServiceImpl implements ISiteInfoService {
 		linksEx = new LinksInfoExample();
 		linksEx.createCriteria().andLiNameEqualTo(linkname);
 		List<LinksInfo> LinkdList = linksDao.selectByExample(linksEx);
-		if (!LinkdList.isEmpty() && LinkdList.size() > 0) {
+		if (!LinkdList.isEmpty()) {
 			return LinkdList.get(0);
 		}
 		return null;
