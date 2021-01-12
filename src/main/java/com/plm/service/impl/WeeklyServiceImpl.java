@@ -1,19 +1,15 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.WeeklyInfoMapper;
 import com.plm.dao.WeeklyViewMapper;
-import com.plm.model.ProjectOtherView;
-import com.plm.model.ProjectOtherViewExample;
 import com.plm.model.WeeklyInfo;
 import com.plm.model.WeeklyView;
 import com.plm.model.WeeklyViewExample;
 import com.plm.service.IWeeklyService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("weeklyService")
 public class WeeklyServiceImpl implements IWeeklyService {
@@ -43,9 +39,9 @@ public class WeeklyServiceImpl implements IWeeklyService {
 	public List<WeeklyView> findWeekly(int userId, int projectId) {
 		weekViewEx = new WeeklyViewExample();
 		weekViewEx.createCriteria().andUIdEqualTo(userId).andPbIdEqualTo(projectId);
-		List<WeeklyView> List = weekViewDao.selectByExample(weekViewEx);
-		if (!List.isEmpty() && List.size() > 0) {
-			return List;
+		List<WeeklyView> list = weekViewDao.selectByExample(weekViewEx);
+		if (!list.isEmpty()) {
+			return list;
 		}
 		return null;
 	}

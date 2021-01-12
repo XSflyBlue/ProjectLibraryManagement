@@ -1,29 +1,16 @@
 package com.plm.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.mail.internet.AddressException;
-
-import org.springframework.stereotype.Service;
-
-import com.plm.dao.ProjectBaseMapper;
 import com.plm.dao.ProjectBaseViewMapper;
 import com.plm.dao.ProjectPlanMapper;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseExample;
-import com.plm.model.ProjectBaseView;
-import com.plm.model.ProjectBaseViewExample;
-import com.plm.model.ProjectPlan;
-import com.plm.model.ProjectPlanExample;
-import com.plm.model.ProjectPlanView;
-import com.plm.model.UserInfo;
+import com.plm.model.*;
 import com.plm.service.IProjectPlanService;
 import com.plm.util.IMailService;
 import com.plm.util.MailEntry;
-import com.plm.util.SendEmail;
 import com.plm.util.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("projectPlanService")
 public class ProjectPlanServiceImpl implements IProjectPlanService {
@@ -60,7 +47,7 @@ public class ProjectPlanServiceImpl implements IProjectPlanService {
 			return 0;
 		}
 		
-		int flag=0;
+		int flag;
 		ProjectPlan oldplan = ppDao.selectByPrimaryKey(plan.getPpId());
 		
 		flag = ppDao.updateByPrimaryKeySelective(plan);
@@ -126,12 +113,7 @@ public class ProjectPlanServiceImpl implements IProjectPlanService {
 	}
 
 	public ProjectPlan findProjectPlan(int planId) {
-		ProjectPlan pplan;
-		pplan = ppDao.selectByPrimaryKey(planId);
-		if(pplan!=null) {
-			return pplan;
-		}
-		return null;
+		return ppDao.selectByPrimaryKey(planId);
 	}
 
 	public List<ProjectPlanView> findProjectView(int planId) {

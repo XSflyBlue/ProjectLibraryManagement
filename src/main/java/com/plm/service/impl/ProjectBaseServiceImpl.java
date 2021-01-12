@@ -1,27 +1,15 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.ProjectBaseMapper;
 import com.plm.dao.ProjectBaseViewMapper;
 import com.plm.dao.ProjectFundsViewMapper;
 import com.plm.dao.ProjectUserMapper;
-import com.plm.dao.WeeklyInfoMapper;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseExample;
-import com.plm.model.ProjectBaseView;
-import com.plm.model.ProjectBaseViewExample;
-import com.plm.model.ProjectFundsView;
-import com.plm.model.ProjectFundsViewExample;
-import com.plm.model.ProjectUser;
-import com.plm.model.ProjectUserExample;
-import com.plm.model.UserInfo;
-import com.plm.model.WeeklyInfo;
+import com.plm.model.*;
 import com.plm.service.IProjectBaseService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("projectBaseService")
 public class ProjectBaseServiceImpl implements IProjectBaseService {
@@ -70,7 +58,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		}
 		
 		
-		if (!pbviewList.isEmpty() && pbviewList.size() > 0) {
+		if (!pbviewList.isEmpty()) {
 			return pbviewList;
 		}
 		return null;
@@ -97,11 +85,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 	}
 
 	public ProjectBase selectById(Integer pbId) {
-		ProjectBase pb = pbDao.selectByPrimaryKey(pbId);
-		if(pb==null) {
-			return null;
-		}
-		return pb;
+		return pbDao.selectByPrimaryKey(pbId);
 	}
 
 	public int editProject(ProjectBase record) {
@@ -117,7 +101,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		fundViewEx = new ProjectFundsViewExample();
 		fundViewEx.createCriteria().andUIdEqualTo(userid);
 		List<ProjectFundsView> fundViewList = fundViewDao.selectByExample(fundViewEx);
-		if (!fundViewList.isEmpty() && fundViewList.size() > 0) {
+		if (!fundViewList.isEmpty()) {
 			return fundViewList;
 		}
 		return null;
@@ -127,7 +111,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		fundViewEx = new ProjectFundsViewExample();
 		fundViewEx.createCriteria().andPbIdEqualTo(projectId);
 		List<ProjectFundsView> fundViewList = fundViewDao.selectByExample(fundViewEx);
-		if (!fundViewList.isEmpty() && fundViewList.size() > 0) {
+		if (!fundViewList.isEmpty()) {
 			return fundViewList.get(0);
 		}
 		return null;
@@ -137,7 +121,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		pbViewEx = new ProjectBaseViewExample();
 		pbViewEx.createCriteria().andPbIdEqualTo(projectId);
 		List<ProjectBaseView> pbviewList = pbviewDao.selectByExample(pbViewEx);
-		if (!pbviewList.isEmpty() && pbviewList.size() > 0) {
+		if (!pbviewList.isEmpty()) {
 			return pbviewList;
 		}
 		return null;
@@ -147,7 +131,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		fundViewEx = new ProjectFundsViewExample();
 		fundViewEx.createCriteria().andPbIdIsNotNull();
 		List<ProjectFundsView> fundViewList = fundViewDao.selectHasGroup(fundViewEx);
-		if (!fundViewList.isEmpty() && fundViewList.size() > 0) {
+		if (!fundViewList.isEmpty()) {
 			return fundViewList;
 		}
 		return null;
@@ -157,7 +141,7 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 		fundViewEx = new ProjectFundsViewExample();
 		fundViewEx.createCriteria().andCollegeEqualTo(college);
 		List<ProjectFundsView> fundViewList = fundViewDao.selectHasGroup(fundViewEx);
-		if (!fundViewList.isEmpty() && fundViewList.size() > 0) {
+		if (!fundViewList.isEmpty()) {
 			return fundViewList;
 		}
 		return null;
@@ -183,14 +167,12 @@ public class ProjectBaseServiceImpl implements IProjectBaseService {
 	public List<ProjectUser> findprojectuserbyuser(Integer userid) {
 		puEx = new ProjectUserExample();
 		puEx.createCriteria().andUIdEqualTo(userid);
-		List<ProjectUser> list= puDao.selectByExample(puEx);
-		return list;
+		return puDao.selectByExample(puEx);
 	}
 
 	public List<ProjectBase> findExcellentProject() {
 		pbEx = new ProjectBaseExample();
 		pbEx.createCriteria().andPbStatusEqualTo(5);
-		List<ProjectBase> list = pbDao.selectByExample(pbEx);
-		return list;
+		return pbDao.selectByExample(pbEx);
 	}
 }

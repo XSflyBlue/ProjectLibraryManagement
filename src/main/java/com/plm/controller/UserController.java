@@ -1,33 +1,27 @@
 package com.plm.controller;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Resource;
-import javax.mail.internet.AddressException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plm.model.ProjectUser;
 import com.plm.model.UserInfo;
 import com.plm.service.IProjectBaseService;
 import com.plm.service.IUserService;
-import com.plm.util.IMailService;
-import com.plm.util.MD5Utils;
-import com.plm.util.MailEntry;
-import com.plm.util.PasswordUtils;
-import com.plm.util.StringUtils;
+import com.plm.util.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.mail.internet.AddressException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 用户相关控制器
@@ -220,7 +214,7 @@ public class UserController {
 		user.setEmail(email);
 		user.setuCode(uCode);
 		user.setStatus(0);//未激活
-		if(userType.equals("0")) {
+		if("0".equals(userType)) {
 			user.setRole(5);//学生
 		}else {
 			user.setRole(4);//指导教师
@@ -238,7 +232,7 @@ public class UserController {
 			model.addAttribute("uCode", uCode);
 		}else {
 			// 进入详细资料页面
-			if(userType.equals("0")) {
+			if("0".equals(userType)) {
 				//学生
 				//写入数据库
 				if(userService.insertUserSelective(user)!=1) {
@@ -295,10 +289,10 @@ public class UserController {
 		userNew.setMajor(major);
 		userNew.setTel(tel);
 		//判断参数操作
-		if(userType.equals("0")) {//学生
+		if ("0".equals(userType)) {//学生
 			//对象封装
 			userNew.setAdmissionDate(StringUtils.strToDate(note, "yyyy-MM-dd"));
-		}else if(userType.equals("1")) {//教师
+		} else if ("1".equals(userType)) {//教师
 			//对象封装
 			userNew.setJobTitle(note);
 		}
@@ -437,7 +431,7 @@ public class UserController {
     public String userlist(HttpServletRequest request,Model model)
             throws ServletException, IOException {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("user");
-		String url = "redirect:/";
+		String url;
 		if(user==null) {
 			return "redirect:/";
 		}
@@ -489,8 +483,7 @@ public class UserController {
 		if(list==null) {
 			return null;
 		}
-		PageInfo<UserInfo> p = new PageInfo<UserInfo>(list);
-		return p;
+		return new PageInfo<>(list);
 	}
 	
     /**
@@ -627,15 +620,15 @@ public class UserController {
 		
 		if(uId==null) {//新增
 			//分身份添加
-			if(type.equals("5")) {//学生
+			if("5".equals(type)) {//学生
 				usernew.setRole(5);
-			}else if(type.equals("4")) {//导师
+			}else if("4".equals(type)) {//导师
 				usernew.setRole(4);
-			}else if(type.equals("3")) {//评审
+			}else if("3".equals(type)) {//评审
 				usernew.setRole(3);
-			}else if(type.equals("2")) {//学院
+			}else if("2".equals(type)) {//学院
 				usernew.setRole(2);
-			}else if(type.equals("1")) {//学校
+			}else if("1".equals(type)) {//学校
 				usernew.setRole(1);
 			}
 			usernew.setuPassword(MD5Utils.stringEncoder("123456"));//默认密码
@@ -711,10 +704,6 @@ public class UserController {
 	 */
 	@RequestMapping("/userinfo")
 	public @ResponseBody UserInfo userinfo(@RequestParam Integer uId,HttpServletRequest request) {
-		UserInfo info = userService.selectUserById(uId);
-		if(info==null) {
-			return null;
-		}
-		return info;
+		return userService.selectUserById(uId);
 	}
 }

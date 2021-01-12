@@ -1,15 +1,5 @@
 package com.plm.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plm.model.PostInfo;
@@ -19,6 +9,14 @@ import com.plm.model.UserInfo;
 import com.plm.service.IPostService;
 import com.plm.service.IProjectPlanService;
 import com.plm.util.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 项目过程管理相关控制器
@@ -94,8 +92,7 @@ public class ProjectProcessController {
 			) {
 		PageHelper.startPage(page, pageSize); 
 		List<PostView> listPost = postService.findPost();
-		PageInfo<PostView> p = new PageInfo<PostView>(listPost);
-		return p;
+		return new PageInfo<PostView>(listPost);
 	}
 	
 	/**

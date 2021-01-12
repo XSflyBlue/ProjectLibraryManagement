@@ -1,41 +1,21 @@
 package com.plm.controller;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.plm.model.*;
+import com.plm.service.*;
+import com.plm.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.plm.model.OpinionInfo;
-import com.plm.model.ProjectBase;
-import com.plm.model.ProjectBaseView;
-import com.plm.model.ProjectEndView;
-import com.plm.model.ProjectFundsView;
-import com.plm.model.ProjectMidView;
-import com.plm.model.ProjectOtherView;
-import com.plm.model.ProjectPlan;
-import com.plm.model.ProjectProcessInfo;
-import com.plm.model.ProjectStartView;
-import com.plm.model.ProjectUser;
-import com.plm.model.UserInfo;
-import com.plm.model.WeeklyInfo;
-import com.plm.model.WeeklyView;
-import com.plm.service.IOpinionService;
-import com.plm.service.IProjectBaseService;
-import com.plm.service.IProjectExtendService;
-import com.plm.service.IProjectPlanService;
-import com.plm.service.IUserService;
-import com.plm.service.IWeeklyService;
-import com.plm.util.StringUtils;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 /**
  * 项目信息管理相关控制器
  * @author Flyblue
@@ -594,44 +574,44 @@ public class ProjectInfoController {
 
 			if(info!=null) {
 				newinfo.setPbId(info.getPbId());//项目id
-				if(type.equals("1")) {//立项
-					if(outype.equals("0")) {//导师
+				if("1".equals(type)) {//立项
+					if("0".equals(outype)) {//导师
 						newinfo.setPsiOStatus(11);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPsiOStatus(17);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPsiOStatus(13);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPsiOStatus(15);
 					}
-				}else if(type.equals("2")) {//中期
-					if(outype.equals("0")) {//导师
+				}else if("2".equals(type)) {//中期
+					if("0".equals(outype)) {//导师
 						newinfo.setPmiOStatus(21);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPmiOStatus(27);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPmiOStatus(23);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPmiOStatus(25);
 					}
-				}else if(type.equals("3")) {//验收
-					if(outype.equals("0")) {//导师
+				}else if("3".equals(type)) {//验收
+					if("0".equals(outype)) {//导师
 						newinfo.setPeiOStatus(31);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPeiOStatus(37);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPeiOStatus(33);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPeiOStatus(35);
 					}
-				}else if(type.equals("4")) {//其他
-					if(outype.equals("0")) {//导师
+				}else if("4".equals(type)) {//其他
+					if("0".equals(outype)) {//导师
 						newinfo.setPoiOStatus(41);
-					}else if(outype.equals("1")) {//专家
+					}else if("1".equals(outype)) {//专家
 						newinfo.setPoiOStatus(47);
-					}else if(outype.equals("2")) {//学院
+					}else if("2".equals(outype)) {//学院
 						newinfo.setPoiOStatus(43);
-					}else if(outype.equals("3")) {//学校
+					}else if("3".equals(outype)) {//学校
 						newinfo.setPoiOStatus(45);
 					}
 				}
@@ -1433,7 +1413,7 @@ public class ProjectInfoController {
 		if(user.getRole()!=5) {//非学生
 			return -6;
 		}
-		if(user.getuId()==loginuser.getuId()) {//本人
+		if(user.getuId().equals(loginuser.getuId())) {//本人
 			return -7;
 		}
 		//项目安排制约

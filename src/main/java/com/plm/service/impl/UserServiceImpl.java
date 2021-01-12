@@ -1,15 +1,13 @@
 package com.plm.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.plm.dao.UserInfoMapper;
 import com.plm.model.UserInfo;
 import com.plm.model.UserInfoExample;
 import com.plm.service.IUserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -80,7 +78,7 @@ public class UserServiceImpl implements IUserService {
     	
     	List <UserInfo> userList = userInfoDao.selectByExample(userEx);
     	UserInfo user = null;
-    	if(!userList.isEmpty()&&userList.size()>0) {
+    	if(!userList.isEmpty()) {
     		user = userList.get(0);
     	}
     	return user;
@@ -96,7 +94,7 @@ public class UserServiceImpl implements IUserService {
     	
     	List <UserInfo> userList = userInfoDao.selectByExample(userEx);
     	UserInfo user = null;
-    	if(!userList.isEmpty()&&userList.size()>0) {
+    	if(!userList.isEmpty()) {
     		user = userList.get(0);
     	}
     	return user;
@@ -112,7 +110,7 @@ public class UserServiceImpl implements IUserService {
     	
     	List <UserInfo> userList = userInfoDao.selectByExample(userEx);
     	UserInfo user = null;
-    	if(!userList.isEmpty()&&userList.size()>0) {
+    	if(!userList.isEmpty()) {
     		user = userList.get(0);
     	}
     	return user;
@@ -133,7 +131,7 @@ public class UserServiceImpl implements IUserService {
 		userEx.createCriteria().andRoleEqualTo(role);
 		
     	List <UserInfo> userList = userInfoDao.selectByExample(userEx);
-    	if(!userList.isEmpty()&&userList.size()>0) {
+    	if(!userList.isEmpty()) {
     		return userList;
     	}
     	return null;
@@ -144,7 +142,7 @@ public class UserServiceImpl implements IUserService {
 		userEx.createCriteria().andRoleEqualTo(role).andCollegeEqualTo(college);
 		
     	List <UserInfo> userList = userInfoDao.selectByExample(userEx);
-    	if(!userList.isEmpty()&&userList.size()>0) {
+    	if(!userList.isEmpty()) {
     		return userList;
     	}
     	return null;
